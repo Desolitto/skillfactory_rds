@@ -13,14 +13,15 @@ print ("Загадано число от 1 до 100")
 
 
 for count in range(1,101):         # более компактный вариант счетчика
-    count = 0
-    predict = np.random.randint(1,101)
+    count = 1
+    predict = int((len(range(1,101))/2))
     while number != predict:
         count+=1
         if number > predict: 
             predict += 1
         elif number < predict: 
             predict -= 1
+    break
     #predict = np.random.randint(1,101) # предполагаемое число
     #if number == predict: break    # выход из цикла, если угадали
     #elif number > predict: print (f"Угадываемое число больше {predict} ")
