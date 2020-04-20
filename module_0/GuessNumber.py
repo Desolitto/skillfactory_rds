@@ -26,12 +26,11 @@ def game_core_v3(number):
         predict = (a + b) // 2     
         count += 1
         if predict == number:
-            return(count)
+            return(count) # выход из цикла, если угадали
         elif predict > number:
             b = predict - 1
         elif predict < number:
             a = predict + 1
-    #return(count) # выход из цикла, если угадали
 
 # Проверяем
 score_game(game_core_v3)
