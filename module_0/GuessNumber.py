@@ -1,48 +1,37 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 20 16:56:03 2020
-
-@author: diika
-"""
-
-
 import numpy as np
 count = 0                            # счетчик попыток
 number = np.random.randint(1,101)    # загадали число
 print ("Загадано число от 1 до 100")
 
+def score_game(game_core):
+    '''Запускаем игру 1000 раз, чтобы узнать, как быстро игра угадывает число'''
+    count_ls = []
+    np.random.seed(1)  # фиксируем RANDOM SEED, чтобы ваш эксперимент был воспроизводим!
+    random_array = np.random.randint(1,101, size=(1000))
+    for number in random_array:
+        count_ls.append(game_core(number))
+    score = int(np.mean(count_ls))
+    print(f"Ваш алгоритм угадывает число в среднем за {score} попыток")
+    return(score)
 
-for count in range(1,101):         # более компактный вариант счетчика
-    count = 1
-    predict = int((len(range(1,101))/2))
-    predictm = int((len(range(1,101))/2)) + int((len(range(1,101))/4))
-    predictl = int((len(range(1,101))/2)) - int((len(range(1,101))/4))
+def game_core_v3(number):
+    '''Сначала устанавливаем цикл нахождения середины диапазона поиска, путем нахождения целой части среднего арифметического границ диапазона,
+       а потом уменьшаем его верхнюю границу или увеличиваем его нижнюю границу в зависимости от того, больше оно или меньше нужного.
+       Функция принимает загаданное число и возвращает число попыток'''
+    count = 0
+    predict = 0
+    a = 1                             # нижняя граница поиска числа
+    b = 100                           # верхняя граница поиска числа 
     while number != predict:
-        if number > predict:
-            while number > predict:
-                count+=1
-                if number > predictm: 
-                    predictm += 1
-                    predict = predictm
-                elif number == predictm:
-                    predict = predictm
-                elif number < predictm:
-                    predict += 1
-        elif number < predict:
-            while number < predict:
-                count+=1
-                if number > predictl: 
-                    predictl += 1
-                    predict = predictl
-                elif number == predictl:
-                    predict = predictm
-                elif number < predictl:
-                    predictl -= 1
-                    predict = predictl
-    break
-    #predict = np.random.randint(1,101) # предполагаемое число
-    #if number == predict: break    # выход из цикла, если угадали
-    #elif number > predict: print (f"Угадываемое число больше {predict} ")
-    #elif number < predict: print (f"Угадываемое число меньше {predict} ")
-        
-print (f"Вы угадали число {number} за {count} попыток.")
+        predict = (a + b) // 2     
+        count += 1
+        if predict == number:
+            return(count)
+        elif predict > number:
+            b = predict - 1
+        elif predict < number:
+            a = predict + 1
+    #return(count) # выход из цикла, если угадали
+
+# Проверяем
+score_game(game_core_v3)
