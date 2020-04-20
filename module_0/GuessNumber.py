@@ -8,7 +8,7 @@ Created on Mon Apr 20 16:56:03 2020
 
 import numpy as np
 count = 0                            # счетчик попыток
-number = 5#np.random.randint(1,101)    # загадали число
+number = np.random.randint(1,101)    # загадали число
 print ("Загадано число от 1 до 100")
 
 
@@ -18,9 +18,9 @@ for count in range(1,101):         # более компактный вариа�
     predictm = int((len(range(1,101))/2)) + int((len(range(1,101))/4))
     predictl = int((len(range(1,101))/2)) - int((len(range(1,101))/4))
     while number != predict:
-        count+=1
         if number > predict:
             while number > predict:
+                count+=1
                 if number > predictm: 
                     predictm += 1
                     predict = predictm
@@ -30,13 +30,15 @@ for count in range(1,101):         # более компактный вариа�
                     predict += 1
         elif number < predict:
             while number < predict:
+                count+=1
                 if number > predictl: 
                     predictl += 1
-                    predict = predictm
+                    predict = predictl
                 elif number == predictl:
                     predict = predictm
                 elif number < predictl:
-                    predict -= 1
+                    predictl -= 1
+                    predict = predictl
     break
     #predict = np.random.randint(1,101) # предполагаемое число
     #if number == predict: break    # выход из цикла, если угадали
