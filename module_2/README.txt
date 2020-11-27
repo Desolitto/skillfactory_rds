@@ -272,7 +272,7 @@ stud.activities = stud.activities.apply(lambda x: "noactivities" if pd.isnull(x)
 
 chgNonenuniq(row='nursery')
 
-Поступаем по аналогии с предидущим
+Поступаем по аналогии с предыдущим
 
 stud.nursery = stud.nursery.apply(lambda x: "nonursery" if pd.isnull(x) else x)
 
